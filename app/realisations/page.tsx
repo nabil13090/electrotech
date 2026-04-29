@@ -1,6 +1,5 @@
-"use client";
+﻿"use client";
 
-import { Metadata } from "next";
 import Image from "next/image";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,7 +9,7 @@ import Link from "next/link";
 const categories = [
   {
     id: "exterieurs",
-    title: "LES EXTÉRIEURS",
+    title: "LES EXTÃ‰RIEURS",
     images: [
       "exterieur1.webp",
       "exterieur2.webp",
@@ -23,7 +22,7 @@ const categories = [
   },
   {
     id: "interieurs",
-    title: "LES INTÉRIEURS",
+    title: "LES INTÃ‰RIEURS",
     images: [
       "interieur.webp",
       "interieur1.webp",
@@ -38,7 +37,7 @@ const categories = [
   },
   {
     id: "tableaux",
-    title: "LES TABLEAUX ÉLECTRIQUES",
+    title: "LES TABLEAUX Ã‰LECTRIQUES",
     images: [
       "tableauelectrique1.webp",
       "tableauelectrique2.webp",
@@ -81,7 +80,7 @@ const categories = [
   },
   {
     id: "alarmes",
-    title: "LES ALARMES & CAMÉRAS",
+    title: "LES ALARMES & CAMÃ‰RAS",
     images: [
       "alarme1.webp",
       "alarme2.jpg",
@@ -139,7 +138,7 @@ export default function RealisationsPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-5xl font-heading font-bold text-dark-900 mb-4"
           >
-            NOS RÉALISATIONS
+            NOS RÃ‰ALISATIONS
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -147,9 +146,9 @@ export default function RealisationsPage() {
             transition={{ delay: 0.1 }}
             className="text-xl text-dark-600 max-w-3xl mx-auto"
           >
-            Nous sommes fiers de partager avec vous un aperçu de nos réalisations.
-            Notre professionnalisme et notre savoir-faire caractérisent chacun de
-            nos projets, que ce soit des résidences, des commerces, des installations
+            Nous sommes fiers de partager avec vous un aperÃ§u de nos rÃ©alisations.
+            Notre professionnalisme et notre savoir-faire caractÃ©risent chacun de
+            nos projets, que ce soit des rÃ©sidences, des commerces, des installations
             industrielles ou des centrales au sol.
           </motion.p>
         </div>
