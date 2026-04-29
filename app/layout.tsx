@@ -85,7 +85,8 @@ export const metadata: Metadata = {
     languages: { "fr-FR": siteUrl },
   },
   verification: {
-    google: "your-google-verification-code",
+    // ✅ SEO : Google Search Console verification code (statisch export)
+    google: "TpUi_iW899J1E8Cn7zIjaT-GyHNpcu_cjukanRpMq5I",
   },
 };
 
