@@ -1,0 +1,13 @@
+# *
+User-agent: *
+Allow: /
+
+# AhrefsBot,SemrushBot,DotBot,MJ12bot,PetalBot
+User-agent: AhrefsBot,SemrushBot,DotBot,MJ12bot,PetalBot
+Disallow: /
+
+# Host
+Host: https://electrotech-sud.fr
+
+# Sitemaps
+Sitemap: https://electrotech-sud.fr/sitemap.xml
