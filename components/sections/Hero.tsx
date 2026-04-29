@@ -20,6 +20,10 @@ const Hero = () => {
           loop
           muted
           playsInline
+          // ✅ SEO : poster = image affichée avant chargement vidéo (meilleur LCP)
+          poster="/images/hero-poster.jpg"
+          // ✅ SEO : ne charge pas la vidéo tant que nécessaire (meilleure perf LCP)
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source src="/images/Métiers_du_bâtiment_et_vidéo.mp4" type="video/mp4" />

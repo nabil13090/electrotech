@@ -97,6 +97,125 @@ export function faqSchema(items: { question: string; answer: string }[]) {
 export default function JsonLd() {
   const org = organizationSchema();
   const web = websiteSchema();
+
+  // ✅ SEO : Schema LocalBusiness (rich snippets Google: étoiles, tel, horaires)
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "ElectricalContractor",
+    "@id": "https://electrotech-sud.fr/#business",
+    name: "Electrotech",
+    description:
+      "Électricien certifié à Marseille depuis 1984. Installation électrique, dépannage, panneaux solaires, borne de recharge IRVE, climatisation.",
+    url: "https://electrotech-sud.fr",
+    telephone: "+33491871108",
+    email: "contact@electrotech13.fr",
+    foundingDate: "1984",
+    priceRange: "€€",
+    image: "https://electrotech-sud.fr/images/logo.png",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://electrotech-sud.fr/images/logo.png",
+      width: 512,
+      height: 512,
+    },
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "58 Traverse des Marronniers",
+      addressLocality: "Marseille",
+      postalCode: "13012",
+      addressCountry: "FR",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 43.3075765,
+      longitude: 5.4754702,
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+        ],
+        opens: "07:30",
+        closes: "18:00",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Saturday", "Sunday"],
+        opens: "00:00",
+        closes: "23:59",
+        description: "Urgences uniquement",
+      },
+    ],
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5.0",
+      reviewCount: "542",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    areaServed: [
+      { "@type": "City", name: "Marseille" },
+      { "@type": "City", name: "Aix-en-Provence" },
+      { "@type": "City", name: "Aubagne" },
+      { "@type": "City", name: "Cassis" },
+      { "@type": "City", name: "La Ciotat" },
+    ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Services électriques",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Installation Électrique CFO/CFA",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Dépannage électrique 24h",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Installation Panneaux Solaires",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Borne de Recharge IRVE",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Climatisation réversible",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Alarme & Vidéosurveillance",
+          },
+        },
+      ],
+    },
+    sameAs: ["https://www.google.fr/maps/place/Electrotech/@43.3075804,5.4728953"],
+  };
+
   return (
     <>
       <script
@@ -108,6 +227,13 @@ export default function JsonLd() {
         type="application/ld+json"
         // ✅ AJOUTÉ SEO/SEC : WebSite
         dangerouslySetInnerHTML={{ __html: JSON.stringify(web) }}
+      />
+      <script
+        type="application/ld+json"
+        // ✅ SEO : injection LocalBusiness/ ElectricalContractor
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(localBusinessSchema),
+        }}
       />
     </>
   );

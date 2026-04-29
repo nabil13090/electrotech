@@ -11,15 +11,39 @@ import CTA from "@/components/sections/CTA";
 
 // ✅ [SEO | STATIC] : metadata dédiée à la page d'accueil
 export const metadata: Metadata = {
-  title: "Électricien à Marseille — Electrotech",
+  // ✅ SEO : titre exact (rich CTR) + template
+  title: {
+    default: "Électricien Marseille 13 | Dépannage 24h | Electrotech",
+    template: "%s | Electrotech Marseille",
+  },
+  // ✅ SEO : meta description complète + mot-clé local
   description:
-    "Electrotech, électricien à Marseille : installation, dépannage, rénovation électrique, climatisation et sécurité pour particuliers et professionnels.",
+    "Électricien certifié à Marseille depuis 1984. Dépannage en moins de 24h, installation électrique, panneaux solaires, borne de recharge. Devis gratuit. ☎ 04 91 87 11 08",
   alternates: { canonical: "/" },
+  // ✅ SEO : Open Graph complet
   openGraph: {
-    title: "Électricien à Marseille — Electrotech",
+    type: "website",
+    locale: "fr_FR",
+    url: "https://electrotech-sud.fr",
+    siteName: "Electrotech",
+    title: "Électricien Marseille 13 | Dépannage 24h | Electrotech",
     description:
-      "Interventions électriques rapides et fiables à Marseille depuis 1984.",
-    url: "/",
+      "Électricien certifié à Marseille depuis 1984. Dépannage en moins de 24h, installation électrique, panneaux solaires, borne de recharge. Devis gratuit.",
+    images: [
+      {
+        url: "https://electrotech-sud.fr/images/logo.png",
+        width: 512,
+        height: 512,
+        alt: "Electrotech — Électricien Marseille",
+      },
+    ],
+  },
+  // ✅ SEO : Twitter Card complet
+  twitter: {
+    card: "summary",
+    title: "Électricien Marseille 13 | Electrotech",
+    description:
+      "Dépannage électrique en moins de 24h à Marseille. Devis gratuit.",
   },
 };
 
