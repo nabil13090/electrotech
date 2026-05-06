@@ -160,13 +160,6 @@ export default function JsonLd() {
         description: "Urgences uniquement",
       },
     ],
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: 5.0,
-      reviewCount: 542,
-      bestRating: 5,
-      worstRating: 1,
-    },
     areaServed: [
       { "@type": "City", name: "Marseille" },
       { "@type": "City", name: "Aix-en-Provence" },
