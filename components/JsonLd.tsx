@@ -38,7 +38,12 @@ export function websiteSchema() {
     "@id": `${base}/#website`,
     url: base,
     name: "Electrotech",
-    publisher: { "@id": `${base}/#organization` },
+    // Google est parfois strict sur le type de l'objet référencé.
+    publisher: {
+      "@type": "Organization",
+      "@id": `${base}/#organization`,
+      name: "Electrotech",
+    },
     inLanguage: "fr-FR",
   };
 }
@@ -76,7 +81,11 @@ export function articleSchema(args: {
     datePublished: args.datePublished,
     dateModified: args.dateModified || args.datePublished,
     mainEntityOfPage: { "@type": "WebPage", "@id": `${base}${path}` },
-    publisher: { "@id": `${base}/#organization` },
+    publisher: {
+      "@type": "Organization",
+      "@id": `${base}/#organization`,
+      name: "Electrotech",
+    },
     inLanguage: "fr-FR",
   };
 }
