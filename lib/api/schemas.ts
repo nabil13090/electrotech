@@ -17,8 +17,6 @@ export const quoteFormSchema = z.object({
   adresse: z.string().min(1).max(200).trim(),
   codePostal: z.string().min(1).max(12).trim(),
   ville: z.string().min(1).max(100).trim(),
-  typePrestation: z.string().min(1).max(200).trim(),
   description: z.string().min(1).max(8000).trim(),
-  budget: z.string().max(120).optional().or(z.literal("")),
   urgence: z.string().max(80).optional().or(z.literal("")),
 });

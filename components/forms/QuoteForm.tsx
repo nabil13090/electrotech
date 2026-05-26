@@ -27,11 +27,9 @@ const quoteSchema = z.object({
     .string()
     .regex(/^\d{5}$/, "Le code postal doit contenir 5 chiffres"),
   ville: z.string().min(2, "La ville doit contenir au moins 2 caractères"),
-  typePrestation: z.string().min(1, "Veuillez sélectionner un type de prestation"),
   description: z
     .string()
     .min(10, "La description doit contenir au moins 10 caractères"),
-  budget: z.string().optional(),
   urgence: z.string().optional(),
 });
 
@@ -96,7 +94,6 @@ const QuoteForm = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && file.size <= 5 * 1024 * 1024) {
-      // 5MB max
       setUploadedFile(file);
     } else {
       alert("Le fichier doit faire moins de 5MB");
@@ -112,11 +109,11 @@ const QuoteForm = () => {
       >
         <CheckCircle className="w-20 h-20 text-green-500 mx-auto mb-6" />
         <h2 className="text-3xl font-heading font-bold text-dark-900 mb-4">
-          Demande envoyée avec succès !
+          Demande de devis envoyée !
         </h2>
         <p className="text-lg text-dark-600 mb-6">
-          Nous avons bien reçu votre demande de devis. Notre équipe vous
-          contactera dans les plus brefs délais (sous 24h).
+          Nous avons bien reçu votre demande. Notre équipe vous contactera sous
+          24h avec un devis personnalisé.
         </p>
         <button
           onClick={() => setIsSuccess(false)}
@@ -135,7 +132,6 @@ const QuoteForm = () => {
       className="bg-white rounded-2xl p-8 md:p-12 shadow-xl"
     >
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        {/* Nom et Prénom */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-semibold text-dark-700 mb-2">
@@ -175,7 +171,6 @@ const QuoteForm = () => {
           </div>
         </div>
 
-        {/* Email et Téléphone */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-semibold text-dark-700 mb-2">
@@ -218,7 +213,6 @@ const QuoteForm = () => {
           </div>
         </div>
 
-        {/* Adresse */}
         <div>
           <label className="block text-sm font-semibold text-dark-700 mb-2">
             Adresse complète *
@@ -237,11 +231,10 @@ const QuoteForm = () => {
           )}
         </div>
 
-        {/* Code Postal et Ville */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-semibold text-dark-700 mb-2">
-              Code Postal *
+              Code postal *
             </label>
             <input
               {...register("codePostal")}
@@ -278,43 +271,14 @@ const QuoteForm = () => {
           </div>
         </div>
 
-        {/* Type de Prestation */}
         <div>
           <label className="block text-sm font-semibold text-dark-700 mb-2">
-            Type de prestation *
-          </label>
-          <select
-            {...register("typePrestation")}
-            className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
-              errors.typePrestation
-                ? "border-red-500 focus:ring-red-500"
-                : "border-gray-300 focus:ring-primary-500"
-            }`}
-          >
-            <option value="">Sélectionnez une prestation</option>
-            <option value="installation">Installation Électrique</option>
-            <option value="depannage">Dépannage & Rénovation</option>
-            <option value="climatisation">Climatisation</option>
-            <option value="alarme">Alarme & Vidéosurveillance</option>
-            <option value="panneaux-solaires">Panneaux Solaires</option>
-            <option value="borne-recharge">Borne de Recharge</option>
-            <option value="autre">Autre</option>
-          </select>
-          {errors.typePrestation && (
-            <p className="mt-1 text-sm text-red-600">
-              {errors.typePrestation.message}
-            </p>
-          )}
-        </div>
-
-        {/* Description */}
-        <div>
-          <label className="block text-sm font-semibold text-dark-700 mb-2">
-            Description du projet *
+            Décrivez votre besoin *
           </label>
           <textarea
             {...register("description")}
             rows={5}
+            placeholder="Ex. : dépannage tableau électrique, installation climatisation, borne IRVE…"
             className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
               errors.description
                 ? "border-red-500 focus:ring-red-500"
@@ -328,45 +292,25 @@ const QuoteForm = () => {
           )}
         </div>
 
-        {/* Budget et Urgence */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-semibold text-dark-700 mb-2">
-              Budget estimé (optionnel)
-            </label>
-            <select
-              {...register("budget")}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-            >
-              <option value="">Sélectionnez un budget</option>
-              <option value="<1000">Moins de 1 000 €</option>
-              <option value="1000-5000">1 000 € - 5 000 €</option>
-              <option value="5000-10000">5 000 € - 10 000 €</option>
-              <option value="10000-25000">10 000 € - 25 000 €</option>
-              <option value=">25000">Plus de 25 000 €</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-dark-700 mb-2">
-              Urgence (optionnel)
-            </label>
-            <select
-              {...register("urgence")}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-            >
-              <option value="">Sélectionnez une urgence</option>
-              <option value="immediate">Immédiate (dépannage)</option>
-              <option value="semaine">Cette semaine</option>
-              <option value="mois">Ce mois-ci</option>
-              <option value="planifie">Projet planifié</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Upload File */}
         <div>
           <label className="block text-sm font-semibold text-dark-700 mb-2">
-            Photo du projet (optionnel, max 5MB)
+            Délai souhaité (optionnel)
+          </label>
+          <select
+            {...register("urgence")}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+          >
+            <option value="">Sélectionnez un délai</option>
+            <option value="immediate">Urgent (dépannage)</option>
+            <option value="semaine">Cette semaine</option>
+            <option value="mois">Ce mois-ci</option>
+            <option value="planifie">À planifier</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-semibold text-dark-700 mb-2">
+            Photo (optionnel, max 5 Mo)
           </label>
           <div className="flex items-center space-x-4">
             <label className="flex-1 cursor-pointer">
@@ -395,7 +339,6 @@ const QuoteForm = () => {
           </div>
         </div>
 
-        {/* Error Message */}
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center space-x-3">
             <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
@@ -403,7 +346,6 @@ const QuoteForm = () => {
           </div>
         )}
 
-        {/* Submit Button */}
         <button
           type="submit"
           disabled={isSubmitting}
@@ -417,14 +359,14 @@ const QuoteForm = () => {
           ) : (
             <>
               <Send className="w-5 h-5" />
-              <span>Envoyer la demande de devis</span>
+              <span>Envoyer ma demande de devis</span>
             </>
           )}
         </button>
 
         <p className="text-sm text-gray-500 text-center">
-          * Champs obligatoires. Vos données sont traitées de manière
-          confidentielle.
+          * Champs obligatoires. Devis gratuit, sans engagement. Vos données sont
+          traitées de manière confidentielle.
         </p>
       </form>
     </motion.div>

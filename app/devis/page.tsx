@@ -16,8 +16,8 @@ export default function DevisPage() {
               Demande de Devis Gratuit
             </h1>
             <p className="text-xl text-dark-600">
-              Remplissez le formulaire ci-dessous et recevez votre devis
-              personnalisé sous 24h
+              Décrivez votre besoin et recevez votre devis gratuit,
+              personnalisé sous 24h.
             </p>
           </div>
           <QuoteForm />

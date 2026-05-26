@@ -53,14 +53,12 @@ $telephone = trim($_POST['telephone'] ?? '');
 $adresse = trim($_POST['adresse'] ?? '');
 $codePostal = trim($_POST['codePostal'] ?? '');
 $ville = trim($_POST['ville'] ?? '');
-$typePrestation = trim($_POST['typePrestation'] ?? '');
 $description = trim($_POST['description'] ?? '');
-$budget = trim($_POST['budget'] ?? '');
 $urgence = trim($_POST['urgence'] ?? '');
 
 if (
   empty($nom) || empty($prenom) || empty($email) || empty($telephone) ||
-  empty($adresse) || empty($codePostal) || empty($ville) || empty($typePrestation) || empty($description)
+  empty($adresse) || empty($codePostal) || empty($ville) || empty($description)
 ) {
   http_response_code(400);
   echo json_encode(['error' => 'Veuillez remplir tous les champs obligatoires.']);
@@ -97,13 +95,6 @@ if (strlen($description) < 10 || strlen($description) > 5000) {
   exit;
 }
 
-$allowedPrestations = ['installation', 'depannage', 'climatisation', 'alarme', 'panneaux-solaires', 'borne-recharge', 'autre'];
-if (!in_array($typePrestation, $allowedPrestations, true)) {
-  http_response_code(400);
-  echo json_encode(['error' => 'Type de prestation invalide.']);
-  exit;
-}
-
 // Sanitization
 $nom = htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
 $prenom = htmlspecialchars($prenom, ENT_QUOTES, 'UTF-8');
@@ -112,9 +103,7 @@ $telephone = htmlspecialchars($telephone, ENT_QUOTES, 'UTF-8');
 $adresse = htmlspecialchars($adresse, ENT_QUOTES, 'UTF-8');
 $codePostal = htmlspecialchars($codePostal, ENT_QUOTES, 'UTF-8');
 $ville = htmlspecialchars($ville, ENT_QUOTES, 'UTF-8');
-$typePrestation = htmlspecialchars($typePrestation, ENT_QUOTES, 'UTF-8');
 $description = htmlspecialchars($description, ENT_QUOTES, 'UTF-8');
-$budget = !empty($budget) ? htmlspecialchars($budget, ENT_QUOTES, 'UTF-8') : 'Non spécifié';
 $urgence = !empty($urgence) ? htmlspecialchars($urgence, ENT_QUOTES, 'UTF-8') : 'Non spécifiée';
 
 // Gestion du fichier
@@ -146,29 +135,16 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
   }
 }
 
-$prestationMap = [
-  'installation' => 'Installation Électrique',
-  'depannage' => 'Dépannage & Rénovation',
-  'climatisation' => 'Climatisation',
-  'alarme' => 'Alarme & Vidéosurveillance',
-  'panneaux-solaires' => 'Panneaux Solaires',
-  'borne-recharge' => 'Borne de Recharge',
-  'autre' => 'Autre',
-];
-$prestationText = $prestationMap[$typePrestation] ?? $typePrestation;
-
 $from = getenv('SMTP_FROM') ?: $email;
 
-$emailSubject = $siteName . ' - ' . $prestationText;
+$emailSubject = $siteName . ' - ' . $nom . ' ' . $prenom;
 $emailBodyText =
   "Nouvelle demande de devis\n\n" .
   "Nom: $nom $prenom\n" .
   "Email: $email\n" .
   "Téléphone: $telephone\n" .
   "Adresse: $adresse, $codePostal $ville\n\n" .
-  "Type de prestation: $prestationText\n" .
-  "Budget: $budget\n" .
-  "Urgence: $urgence\n\n" .
+  "Délai souhaité: $urgence\n\n" .
   "Description:\n$description\n\n" .
   "---\n" .
   "IP: $ip\n" .

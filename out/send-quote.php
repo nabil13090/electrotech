@@ -55,14 +55,12 @@ $telephone = isset($_POST['telephone']) ? trim($_POST['telephone']) : '';
 $adresse = isset($_POST['adresse']) ? trim($_POST['adresse']) : '';
 $codePostal = isset($_POST['codePostal']) ? trim($_POST['codePostal']) : '';
 $ville = isset($_POST['ville']) ? trim($_POST['ville']) : '';
-$typePrestation = isset($_POST['typePrestation']) ? trim($_POST['typePrestation']) : '';
 $description = isset($_POST['description']) ? trim($_POST['description']) : '';
-$budget = isset($_POST['budget']) ? trim($_POST['budget']) : '';
 $urgence = isset($_POST['urgence']) ? trim($_POST['urgence']) : '';
 
 // Validation des champs obligatoires
 if (empty($nom) || empty($prenom) || empty($email) || empty($telephone) || 
-    empty($adresse) || empty($codePostal) || empty($ville) || empty($typePrestation) || empty($description)) {
+    empty($adresse) || empty($codePostal) || empty($ville) || empty($description)) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Veuillez remplir tous les champs obligatoires.']);
     exit;
@@ -106,14 +104,6 @@ if (strlen($description) < 10 || strlen($description) > 5000) {
     exit;
 }
 
-// Validation du type de prestation
-$allowed_prestations = ['installation', 'depannage', 'climatisation', 'alarme', 'panneaux-solaires', 'borne-recharge', 'autre'];
-if (!in_array($typePrestation, $allowed_prestations)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Type de prestation invalide.']);
-    exit;
-}
-
 // Protection XSS - Sanitization
 $nom = htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
 $prenom = htmlspecialchars($prenom, ENT_QUOTES, 'UTF-8');
@@ -122,9 +112,7 @@ $telephone = htmlspecialchars($telephone, ENT_QUOTES, 'UTF-8');
 $adresse = htmlspecialchars($adresse, ENT_QUOTES, 'UTF-8');
 $codePostal = htmlspecialchars($codePostal, ENT_QUOTES, 'UTF-8');
 $ville = htmlspecialchars($ville, ENT_QUOTES, 'UTF-8');
-$typePrestation = htmlspecialchars($typePrestation, ENT_QUOTES, 'UTF-8');
 $description = htmlspecialchars($description, ENT_QUOTES, 'UTF-8');
-$budget = !empty($budget) ? htmlspecialchars($budget, ENT_QUOTES, 'UTF-8') : 'Non spécifié';
 $urgence = !empty($urgence) ? htmlspecialchars($urgence, ENT_QUOTES, 'UTF-8') : 'Non spécifiée';
 
 // Gestion du fichier uploadé (optionnel)
@@ -159,21 +147,8 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
     }
 }
 
-// Mapper les types de prestation
-$prestation_map = [
-    'installation' => 'Installation Électrique',
-    'depannage' => 'Dépannage & Rénovation',
-    'climatisation' => 'Climatisation',
-    'alarme' => 'Alarme & Vidéosurveillance',
-    'panneaux-solaires' => 'Panneaux Solaires',
-    'borne-recharge' => 'Borne de Recharge',
-    'autre' => 'Autre'
-];
-
-$prestation_text = isset($prestation_map[$typePrestation]) ? $prestation_map[$typePrestation] : $typePrestation;
-
 // Préparer l'email
-$email_subject = $site_name . ' - Demande de devis : ' . $prestation_text;
+$email_subject = $site_name . ' - Demande de devis : ' . $nom . ' ' . $prenom;
 
 // Corps de l'email en HTML
 $email_body = "<!DOCTYPE html>
@@ -215,13 +190,7 @@ $email_body = "<!DOCTYPE html>
             <div class='section'>
                 <h3 style='color: #0071e6; margin-top: 0;'>Détails de la demande</h3>
                 <div class='field'>
-                    <span class='label'>Type de prestation:</span> " . $prestation_text . "
-                </div>
-                <div class='field'>
-                    <span class='label'>Budget:</span> " . $budget . "
-                </div>
-                <div class='field'>
-                    <span class='label'>Urgence:</span> " . $urgence . "
+                    <span class='label'>Délai souhaité:</span> " . $urgence . "
                 </div>
                 <div class='field'>
                     <span class='label'>Description:</span>
