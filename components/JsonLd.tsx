@@ -119,6 +119,7 @@ export default function JsonLd() {
     telephone: "+33491871108",
     email: "contact@electrotech13.fr",
     foundingDate: "1984",
+    priceRange: "€€",
     image: "https://electrotech-sud.fr/images/logo.png",
     logo: {
       "@type": "ImageObject",

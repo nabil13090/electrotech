@@ -17,7 +17,9 @@ export async function POST(request: NextRequest) {
       adresse: String(formData.get("adresse") ?? ""),
       codePostal: String(formData.get("codePostal") ?? ""),
       ville: String(formData.get("ville") ?? ""),
+      typePrestation: String(formData.get("typePrestation") ?? ""),
       description: String(formData.get("description") ?? ""),
+      budget: String(formData.get("budget") ?? ""),
       urgence: String(formData.get("urgence") ?? ""),
     };
 
@@ -37,7 +39,9 @@ export async function POST(request: NextRequest) {
       adresse,
       codePostal,
       ville,
+      typePrestation,
       description,
+      budget,
       urgence,
     } = parsed.data;
 
@@ -83,7 +87,9 @@ export async function POST(request: NextRequest) {
     const safeAdresse = escapeHtml(adresse);
     const safeCp = escapeHtml(codePostal);
     const safeVille = escapeHtml(ville);
-    const safeUrgence = escapeHtml(urgence || "Non spécifié");
+    const safeType = escapeHtml(typePrestation);
+    const safeBudget = escapeHtml(budget || "Non spécifié");
+    const safeUrgence = escapeHtml(urgence || "Non spécifiée");
     const safeDesc = escapeHtml(description).replace(/\n/g, "<br/>");
 
     const emailHtml = `
@@ -97,7 +103,9 @@ export async function POST(request: NextRequest) {
       </ul>
       <h3>Détails de la demande</h3>
       <ul>
-        <li><strong>Délai souhaité:</strong> ${safeUrgence}</li>
+        <li><strong>Type de prestation:</strong> ${safeType}</li>
+        <li><strong>Budget:</strong> ${safeBudget}</li>
+        <li><strong>Urgence:</strong> ${safeUrgence}</li>
         <li><strong>Description:</strong><br/>${safeDesc}</li>
       </ul>
     `;
@@ -116,8 +124,8 @@ export async function POST(request: NextRequest) {
     const confirmationHtml = `
       <h2>Merci pour votre demande de devis !</h2>
       <p>Bonjour ${safePrenom},</p>
-      <p>Nous avons bien reçu votre demande de devis.</p>
-      <p>Notre équipe va étudier votre besoin et vous contactera dans les plus brefs délais (sous 24h).</p>
+      <p>Nous avons bien reçu votre demande de devis pour : <strong>${safeType}</strong></p>
+      <p>Notre équipe va étudier votre demande et vous contactera dans les plus brefs délais (sous 24h).</p>
       <p>En cas d'urgence, n'hésitez pas à nous appeler au <strong>04 91 87 11 08</strong>.</p>
       <p>Cordialement,<br/>L'équipe Electrotech</p>
     `;
