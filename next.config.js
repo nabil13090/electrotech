@@ -9,8 +9,8 @@ const nextConfig = {
   reactStrictMode: true,
   // ✅ [SEO | STATIC] : retire la signature framework
   poweredByHeader: false,
-  // ✅ [SEO | STATIC] : URLs cohérentes Apache (index.html dans chaque dossier)
-  trailingSlash: true,
+  // ✅ [SEO] : URLs sans trailing slash pour éviter redirections GSC
+  trailingSlash: false,
   // ✅ [SEO | STATIC] : optimisation images faite en amont
   images: {
     unoptimized: true,
